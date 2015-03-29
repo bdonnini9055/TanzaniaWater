@@ -1,0 +1,1 @@
+Put files that we want to ignore in here (stack dumps whatever)
