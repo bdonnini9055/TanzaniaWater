@@ -57,6 +57,9 @@ fTrain['numInstaller'] = fTrain['installer']
 newInstallerDict = {'numInstaller': installerDict}
 fTrain = fTrain.replace(to_replace=newInstallerDict)
 
+test['numInstaller'] = test['installer']
+test = test.replace(to_replace=newInstallerDict)
+
 # For Funder
 groupedByFunder = fTrain.groupby('funder', as_index=False).aggregate(np.mean)
 funderNum = groupedByFunder[['funder','numStatus']]
@@ -75,6 +78,10 @@ fTrain['numWpt_name'] = fTrain['wpt_name']
 newWpt_nameDict = {'numWpt_name': wpt_nameDict}
 fTrain = fTrain.replace(to_replace=newWpt_nameDict)
 
+test['numWpt_name'] = test['wpt_name']
+test = test.replace(to_replace=newWpt_nameDict)
+'''
+
 #For Basin
 groupedByBasin = fTrain.groupby('basin', as_index=False).aggregate(np.mean)
 basinNum = groupedByBasin[['basin','numStatus']]
@@ -84,6 +91,10 @@ fTrain['numBasin'] = fTrain['basin']
 newBasinDict = {'numBasin': basinDict}
 fTrain = fTrain.replace(to_replace=newBasinDict)
 
+test['numBasin'] = test['basin']
+test = test.replace(to_replace=newBasinDict)
+
+'''
 # For Subvillage
 groupedBySubvillage = fTrain.groupby('subvillage', as_index=False).aggregate(np.mean)
 subvillageNum = groupedBySubvillage[['subvillage','numStatus']]
@@ -150,7 +161,7 @@ fTrain = fTrain.replace(to_replace=newExtraction_typeDict)
 test['numExtraction_type'] = test['extraction_type']
 test = test.replace(to_replace=newExtraction_typeDict)
 
-'''
+
 # For Payment Type
 groupedByPayment_type = fTrain.groupby('payment_type', as_index=False).aggregate(np.mean)
 payment_typeNum = groupedByPayment_type[['payment_type','numStatus']]
@@ -160,6 +171,9 @@ fTrain['numPayment_type'] = fTrain['payment_type']
 newPayment_typeDict = {'numPayment_type': payment_typeDict}
 fTrain = fTrain.replace(to_replace=newPayment_typeDict)
 
+test['numPayment_type'] = test['payment_type']
+test = test.replace(to_replace=newPayment_typeDict)
+'''
 # For Water Quality
 groupedByWater_quality = fTrain.groupby('water_quality', as_index=False).aggregate(np.mean)
 water_qualityNum = groupedByWater_quality[['water_quality','numStatus']]
@@ -201,7 +215,7 @@ fTrain = fTrain.replace(to_replace=newWaterpoint_typeDict)
 
 '''
 
-relevantinput = fTrain[['numExtraction_type','population']]
+relevantinput = fTrain[['numExtraction_type','population', 'numBasin', 'numPayment_type']]
 trainsample = fTrain[['status_group']]
 
 
@@ -212,9 +226,9 @@ clf = clf.fit(relevantinput, trainsample)
 #reader2ids = test[['id']]
 #relevantinput2 = test[['amount_tsh','gps_height', 'longitude', 'construction_year', 'population']]
 
-answer = pd.DataFrame(clf.predict(test[['numExtraction_type', 'population']]))
+answer = pd.DataFrame(clf.predict(test[['numExtraction_type', 'population', 'numBasin', 'numPayment_type']]))
 #answer = answer.append(test['id'])
-answer.to_csv('march-twenty-nine-numExtraction-type-and-population.csv')
+answer.to_csv('march-twenty-nine-numExtraction-type-basin-payment-and-population.csv')
 
 '''
 #split data
