@@ -121,7 +121,7 @@ district_codeDict ={key: value for (key, value) in district_codeZip}
 fTrain['numDistrict_code'] = fTrain['district_code']
 newDistrict_codeDict = {'numDistrict_code': district_codeDict}
 fTrain = fTrain.replace(to_replace=newDistrict_codeDict)
-
+'''
 # For lga
 groupedByLga = fTrain.groupby('lga', as_index=False).aggregate(np.mean)
 lgaNum = groupedByLga[['lga','numStatus']]
@@ -131,6 +131,10 @@ fTrain['numLga'] = fTrain['lga']
 newLgaDict = {'numLga': lgaDict}
 fTrain = fTrain.replace(to_replace=newLgaDict)
 
+test['numLga'] = test['lga']
+test = test.replace(to_replace=newLgaDict)
+
+'''
 # For Ward
 groupedByWard = fTrain.groupby('ward', as_index=False).aggregate(np.mean)
 wardNum = groupedByWard[['ward','numStatus']]
@@ -140,6 +144,10 @@ fTrain['numWard'] = fTrain['ward']
 newWardDict = {'numWard': wardDict}
 fTrain = fTrain.replace(to_replace=newWardDict)
 
+test['numWard'] = test['ward']
+test = test.replace(to_replace=newWardDict)
+
+
 #For scheme management
 groupedByScheme_management = fTrain.groupby('scheme_management', as_index=False).aggregate(np.mean)
 scheme_managementNum = groupedByScheme_management[['scheme_management','numStatus']]
@@ -148,6 +156,9 @@ scheme_managementDict ={key: value for (key, value) in scheme_managementZip}
 fTrain['numScheme_management'] = fTrain['scheme_management']
 newScheme_managementDict = {'numScheme_management': scheme_managementDict}
 fTrain = fTrain.replace(to_replace=newScheme_managementDict)
+
+test['numScheme_management'] = test['scheme_management']
+test = test.replace(to_replace=newScheme_managementDict)
 '''
 #For extraction type in training data
 groupedByExtraction_type = fTrain.groupby('extraction_type', as_index=False).aggregate(np.mean)
@@ -173,7 +184,7 @@ fTrain = fTrain.replace(to_replace=newPayment_typeDict)
 
 test['numPayment_type'] = test['payment_type']
 test = test.replace(to_replace=newPayment_typeDict)
-'''
+
 # For Water Quality
 groupedByWater_quality = fTrain.groupby('water_quality', as_index=False).aggregate(np.mean)
 water_qualityNum = groupedByWater_quality[['water_quality','numStatus']]
@@ -182,6 +193,11 @@ water_qualityDict ={key: value for (key, value) in water_qualityZip}
 fTrain['numWater_quality'] = fTrain['water_quality']
 newWater_qualityDict = {'numWater_quality': water_qualityDict}
 fTrain = fTrain.replace(to_replace=newWater_qualityDict)
+
+test['numWater_quality'] = test['water_quality']
+test = test.replace(to_replace=newWater_qualityDict)
+
+
 
 #For Quantity
 groupedByQuantity = fTrain.groupby('quantity', as_index=False).aggregate(np.mean)
@@ -192,6 +208,10 @@ fTrain['numQuantity'] = fTrain['quantity']
 newQuantityDict = {'numQuantity': quantityDict}
 fTrain = fTrain.replace(to_replace=newQuantityDict)
 
+test['numQuantity'] = test['quantity']
+test = test.replace(to_replace=newQuantityDict)
+
+
 # For Source
 groupedBySource = fTrain.groupby('source', as_index=False).aggregate(np.mean)
 sourceNum = groupedBySource[['source','numStatus']]
@@ -200,6 +220,10 @@ sourceDict ={key: value for (key, value) in sourceZip}
 fTrain['numSource'] = fTrain['source']
 newSourceDict = {'numSource': sourceDict}
 fTrain = fTrain.replace(to_replace=newSourceDict)
+
+test['numSource'] = test['source']
+test = test.replace(to_replace=newSourceDict)
+
 
 # For Waterpoint Type
 
@@ -211,11 +235,14 @@ fTrain['numWaterpoint_type'] = fTrain['waterpoint_type']
 newWaterpoint_typeDict = {'numWaterpoint_type': waterpoint_typeDict}
 fTrain = fTrain.replace(to_replace=newWaterpoint_typeDict)
 
+test['numWaterpoint_type'] = test['waterpoint_type']
+test = test.replace(to_replace=newWaterpoint_typeDict)
+
 #print fTrain[1:15]
 
-'''
 
-relevantinput = fTrain[['numExtraction_type','population', 'numBasin', 'numPayment_type']]
+
+relevantinput = fTrain[['numExtraction_type','population', 'numBasin', 'numPayment_type', 'numQuantity', 'numSource', 'numWaterpoint_type', 'numLga']]
 trainsample = fTrain[['status_group']]
 
 
@@ -226,9 +253,9 @@ clf = clf.fit(relevantinput, trainsample)
 #reader2ids = test[['id']]
 #relevantinput2 = test[['amount_tsh','gps_height', 'longitude', 'construction_year', 'population']]
 
-answer = pd.DataFrame(clf.predict(test[['numExtraction_type', 'population', 'numBasin', 'numPayment_type']]))
+answer = pd.DataFrame(clf.predict(test[['numExtraction_type', 'population', 'numBasin', 'numPayment_type', 'numQuantity', 'numSource', 'numWaterpoint_type', 'numLga']]))
 #answer = answer.append(test['id'])
-answer.to_csv('march-twenty-nine-numExtraction-type-basin-payment-and-population.csv')
+answer.to_csv('march-twenty-nine-numExtraction-type-basin-payment-quality-quantity-source-water-type-lga-and-population.csv')
 
 '''
 #split data
