@@ -240,9 +240,10 @@ test = test.replace(to_replace=newWaterpoint_typeDict)
 
 #print fTrain[1:15]
 
+trainWithImputedYears = pd.read_csv('training-with-imputed-years.csv')
 
-'''
-relevantinput = fTrain[['numExtraction_type','population', 'numBasin', 'numPayment_type', 'numQuantity', 'numSource', 'numWaterpoint_type', 'numLga']]
+fTrain['imputedYear'] = trainWithImputedYears['imputedYear']
+relevantinput = fTrain[['numExtraction_type','population', 'numBasin', 'numPayment_type', 'numQuantity', 'numSource', 'numWaterpoint_type', 'numLga', 'imputedYear']]
 trainsample = fTrain[['status_group']]
 
 
@@ -253,13 +254,13 @@ clf = clf.fit(relevantinput, trainsample)
 #reader2ids = test[['id']]
 #relevantinput2 = test[['amount_tsh','gps_height', 'longitude', 'construction_year', 'population']]
 
-answer = pd.DataFrame(clf.predict(test[['numExtraction_type', 'population', 'numBasin', 'numPayment_type', 'numQuantity', 'numSource', 'numWaterpoint_type', 'numLga']]))
+answer = pd.DataFrame(clf.predict(test[['numExtraction_type', 'population', 'numBasin', 'numPayment_type', 'numQuantity', 'numSource', 'numWaterpoint_type', 'numLga', 'imputedYear']]))
 #answer = answer.append(test['id'])
-answer.to_csv('march-twenty-nine-numExtraction-type-basin-payment-quality-quantity-source-water-type-lga-and-population.csv')
+answer.to_csv('april-nineteen-numExtraction-type-basin-payment-quality-quantity-source-water-type-lga-imputedYear-and-population.csv')
 
-'''
+
 # Write to CSV
-trainOutput = fTrain.to_csv('train-with-numbers.csv')
+#trainOutput = fTrain.to_csv('train-with-numbers.csv')
 
 
 

@@ -23,3 +23,25 @@ length(training[training$amount_tsh == 0,1])
 
 #just construction_Year
 length(training[training$construction_year == 0,1])
+
+
+#For construction year
+fit2 <- lm(construction_year ~ amount_tsh + gps_height + longitude +  latitude +  population + num_private, data=training)
+summary(fit2) # show results 
+
+numExtract <- read.csv("fullNumericExtract.csv")
+training$numExtractType <- numExtract$value
+
+# for constructoin year
+library(leaps)
+
+regsubsets.out2 <-
+  regsubsets(construction_year ~ amount_tsh + gps_height + population + longitude + latitude + numExtractType, data = training)
+regsubsets.out2
+
+summary.out <- summary(regsubsets.out2)
+as.data.frame(summary.out$outmat)
+
+plot(regsubsets.out2, scale = "adjr2", main = "Adjusted R^2")
+
+
