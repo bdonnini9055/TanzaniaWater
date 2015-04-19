@@ -241,7 +241,7 @@ test = test.replace(to_replace=newWaterpoint_typeDict)
 #print fTrain[1:15]
 
 
-
+'''
 relevantinput = fTrain[['numExtraction_type','population', 'numBasin', 'numPayment_type', 'numQuantity', 'numSource', 'numWaterpoint_type', 'numLga']]
 trainsample = fTrain[['status_group']]
 
@@ -256,6 +256,13 @@ clf = clf.fit(relevantinput, trainsample)
 answer = pd.DataFrame(clf.predict(test[['numExtraction_type', 'population', 'numBasin', 'numPayment_type', 'numQuantity', 'numSource', 'numWaterpoint_type', 'numLga']]))
 #answer = answer.append(test['id'])
 answer.to_csv('march-twenty-nine-numExtraction-type-basin-payment-quality-quantity-source-water-type-lga-and-population.csv')
+
+'''
+# Write to CSV
+trainOutput = fTrain.to_csv('train-with-numbers.csv')
+
+
+
 
 '''
 #split data
